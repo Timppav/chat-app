@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import queryString from "query-string";
 import io from "socket.io-client";
 
@@ -19,6 +19,7 @@ const Chat = () => {
     const [messages, setMessages] = useState([]);
 
     const location = useLocation();
+    const navigate = useNavigate();
     const ENDPOINT = "localhost:5000";
 
     useEffect(() => {
@@ -29,26 +30,33 @@ const Chat = () => {
         setName(name);
         setRoom(room);
 
-        socket.emit("join", { name, room }, () => {
-
+        socket.emit("join", { name, room }, (error) => {
+            if (error) {
+                alert(error);
+                navigate("/");
+            }
         });
 
         return () => {
-            socket.emit("disconnect");
-
+            socket.disconnect();
             socket.off();
         }
-    }, [ENDPOINT, location.search]);
+    }, [ENDPOINT, location.search, navigate]);
 
     useEffect(() => {
-        socket.once("message", (message) => {
+        socket.on("message", (message) => {
             setMessages(messages => [ ...messages, message ]);
         });
 
         socket.on("roomData", ({ users }) => {
             setUsers(users);
         })
-    }, [messages]);
+
+        return () => {
+            socket.off("message");
+            socket.off("roomData");
+        };
+    }, []);
 
     const sendMessage = (event) => {
         event.preventDefault();
@@ -56,9 +64,7 @@ const Chat = () => {
         if (message) {
             socket.emit("sendMessage", message, () => setMessage(""));
         }
-    }
-
-    console.log(message, messages);
+    };
 
     return (
         <div className="outerContainer">
