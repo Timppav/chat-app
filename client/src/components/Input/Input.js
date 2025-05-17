@@ -8,6 +8,7 @@ const Input = ({ message, setMessage, sendMessage }) => (
             className="input"
             type="text"
             placeholder="Type a message..."
+            value={message}
             onChange={(event) => setMessage(event.target.value)}
             onKeyDown={event => event.key === "Enter" ? sendMessage(event) : null}
         />
