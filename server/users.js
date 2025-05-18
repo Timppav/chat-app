@@ -1,8 +1,25 @@
 const users = [];
+const MAX_LENGTH = 20;
 
 const addUser = ({ id, name, room }) => {
     const originalName = name;
     const originalRoom = room;
+
+    if (originalName.length > MAX_LENGTH) {
+        return { error: `Username cannot be longer than ${MAX_LENGTH} characters!` };
+    }
+
+    if (originalName.length < 1) {
+        return { error: "Username cannot be blank!" };
+    }
+
+    if (originalRoom.length > MAX_LENGTH) {
+        return { error: `Room name cannot be longer than ${MAX_LENGTH} characters` };
+    }
+
+    if (originalRoom.length < 1) {
+        return { error: "Room name cannot be blank!" };
+    }
 
     name = name.trim().toLowerCase();
     room = room.trim().toLowerCase();
@@ -41,4 +58,4 @@ const getUsersInRoom = (room) => {
     return users.filter((user) => user.room === normalizedRoom);
 }
 
-module.exports = { addUser, removeUser, getUser, getUsersInRoom };
+module.exports = { addUser, removeUser, getUser, getUsersInRoom, MAX_LENGTH };
