@@ -25,6 +25,10 @@ const Chat = () => {
     useEffect(() => {
         const { name, room } = queryString.parse(location.search);
 
+        if (!name || !room) {
+            navigate("/");
+        }
+
         socket = io(ENDPOINT,{transports:['websocket','polling','flashsocket']});
 
         setName(name);
@@ -65,6 +69,10 @@ const Chat = () => {
             socket.emit("sendMessage", message, () => setMessage(""));
         }
     };
+
+    if (!name || room) {
+        return null;
+    }
 
     return (
         <div className="outerContainer">
