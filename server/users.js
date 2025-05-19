@@ -1,7 +1,7 @@
 const users = [];
 const MAX_LENGTH = 20;
 
-const addUser = ({ id, name, room }) => {
+const addUser = ({ id, name, room, picture }) => {
     const originalName = name;
     const originalRoom = room;
 
@@ -30,12 +30,15 @@ const addUser = ({ id, name, room }) => {
         return { error: `Username '${originalName}' is already taken in the room '${originalRoom}'` };
     }
 
+    const defaultPicture = "avatar1";
+
     const user = {
         id,
         name,
         room,
         displayName: originalName.trim(),
-        displayRoom: originalRoom.trim()
+        displayRoom: originalRoom.trim(),
+        picture: picture || defaultPicture
     };
 
     users.push(user);

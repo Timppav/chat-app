@@ -23,7 +23,8 @@ const Chat = () => {
     const ENDPOINT = "localhost:5000";
 
     useEffect(() => {
-        const { name, room } = queryString.parse(location.search);
+        const { name, room, avatar: parsedAvatar } = queryString.parse(location.search);
+        const avatar = parsedAvatar || "avatar1";
 
         if (!name || !room) {
             navigate("/");
@@ -34,7 +35,7 @@ const Chat = () => {
         setName(name);
         setRoom(room);
 
-        socket.emit("join", { name, room }, (error) => {
+        socket.emit("join", { name, room, picture: avatar || "avatar1" }, (error) => {
             if (error) {
                 alert(error);
                 navigate("/");
@@ -53,8 +54,8 @@ const Chat = () => {
         });
 
         socket.on("roomData", ({ users }) => {
-            setUsers(users || []);
-        })
+            setUsers(users);
+        });
 
         return () => {
             socket.off("message");

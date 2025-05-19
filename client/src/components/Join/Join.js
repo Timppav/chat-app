@@ -1,6 +1,7 @@
 import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
 
+import ProfilePictureSelector from "../ProfilePictureSelector/ProfilePictureSelector";
 import "./Join.css";
 
 const MAX_LENGTH = 20;
@@ -8,6 +9,7 @@ const MAX_LENGTH = 20;
 const Join = () => {
     const [name, setName] = useState("");
     const [room, setRoom] = useState("");
+    const [profilePicture, setProfilePicture] = useState("avatar1");
     const navigate = useNavigate();
 
     const handleNameChange = (event) => {
@@ -24,9 +26,13 @@ const Join = () => {
         }
     };
 
+    const handlePictureSelect = (picturePath) => {
+        setProfilePicture(picturePath);
+    };
+
     const handleJoin = () => {
         if (name && room) {
-            navigate(`/chat?name=${name}&room=${room}`);
+            navigate(`/chat?name=${name}&room=${room}&avatar=${profilePicture}`);
         }
     };
 
@@ -60,6 +66,10 @@ const Join = () => {
                         {room.length}/{MAX_LENGTH}
                     </div>
                 </div>
+                <ProfilePictureSelector 
+                    selectedPicture={profilePicture}
+                    onSelectPicture={handlePictureSelect}
+                />
             </div>
             <button
                 className={`button mt-20 ${(!name || !room) ? "button-disabled" : ""}`}

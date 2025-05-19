@@ -19,13 +19,14 @@ const formatUsers = (users) => {
     if (!Array.isArray(users)) return [];
     return users.map(u => ({
         id: u.id,
-        name: u.displayName || u.name
+        name: u.displayName || u.name,
+        picture: u.picture
     }));
 };
 
 io.on("connect", (socket) => {
-    socket.on("join", ({ name, room }, callback) => {
-        const { error, user } = addUser({ id: socket.id, name, room });
+    socket.on("join", ({ name, room, picture }, callback) => {
+        const { error, user } = addUser({ id: socket.id, name, room, picture });
 
         if (error) return callback(error);
 
@@ -40,12 +41,14 @@ io.on("connect", (socket) => {
 
         socket.emit("message", {
             user: "System",
-            text: `${user.displayName || user.name}, welcome to ${user.displayRoom || user.room}`
+            text: `${user.displayName || user.name}, welcome to ${user.displayRoom || user.room}`,
+            picture: "system"
         });
 
         socket.broadcast.to(user.room).emit("message",{
             user: "System",
-            text: `${user.displayName || user.name} has joined!`
+            text: `${user.displayName || user.name} has joined!`,
+            picture: "system"
         });
 
         callback();
@@ -58,7 +61,8 @@ io.on("connect", (socket) => {
 
         io.to(user.room).emit("message",{
             user: user.displayName || user.name,
-            text: message
+            text: message,
+            picture: user.picture
         });
 
         const usersInRoom = getUsersInRoom(user.room);
@@ -77,7 +81,8 @@ io.on("connect", (socket) => {
         if (user) {
             io.to(user.room).emit("message", {
                 user: "System",
-                text: `${user.displayName || user.name} has left.`
+                text: `${user.displayName || user.name} has left.`,
+                picture: "system"
             });
 
             const usersInRoom = getUsersInRoom(user.room);
