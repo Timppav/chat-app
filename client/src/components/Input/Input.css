@@ -11,7 +11,19 @@
   font-size: 1.2em;
 }
 
-input:focus, textarea:focus, select:focus{
+.inputContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.inputWrapper {
+    display: flex;
+    width: 100%;
+}
+
+input:focus, textarea:focus, select:focus {
   outline: none;
 }
 
@@ -24,8 +36,45 @@ input:focus, textarea:focus, select:focus{
   display: inline-block;
   border: none;
   width: 20%;
+  cursor: pointer;
 }
 
 .sendButton:hover {
   background-color: #6f240e;
+}
+
+.emojiButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: white;
+    padding: 0 15px;
+    cursor: pointer;
+    color: #555;
+}
+
+.emojiButton:hover {
+    color: #2979FF;
+}
+
+.emojiPickerContainer {
+    position: relative;
+    width: 100%;
+}
+
+.emojiPicker {
+    position: absolute;
+    bottom: 10px;
+    left: 5px;
+    z-index: 100;
+    transform: scale(0.8);
+    transform-origin: bottom left;
+}
+
+@media (max-width: 768px) {
+    .emojiPicker {
+        right: 0;
+        left: auto;
+    }
 }
