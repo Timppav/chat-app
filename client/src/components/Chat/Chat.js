@@ -70,7 +70,7 @@ const Chat = () => {
         }
     };
 
-    if (!name || room) {
+    if (!name || !room) {
         return null;
     }
 
