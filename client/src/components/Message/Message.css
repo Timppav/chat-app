@@ -58,10 +58,10 @@
   color: #353535;
 }
 
-.backgroundOrange {
-  background-color: #f4511e;
+.backgroundLight {
+  background-color: #ae4220;
 }
 
-.backgroundLight {
-  background: #ecac99;
+.backgroundDark {
+  background: #6f240e;
 }
