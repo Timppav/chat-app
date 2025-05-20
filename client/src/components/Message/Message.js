@@ -30,9 +30,7 @@ const avatars = {
 const Message = ({ message: { user, text, picture }, name }) => {
     let isSentByCurrentUser = false;
 
-    const trimmedName = name.trim().toLowerCase();
-
-    if (user === trimmedName) {
+    if (user.trim().toLowerCase() === name.trim().toLowerCase()) {
         isSentByCurrentUser = true;
     }
 
@@ -41,25 +39,29 @@ const Message = ({ message: { user, text, picture }, name }) => {
     return (
         isSentByCurrentUser
             ? (
-                <div className="messageContainer justifyEnd">
-                    <p className="sentText pr-10">{trimmedName}</p>
-                    <div className="messageBox backgroundDark">
-                        <p className="messageText colorWhite">{text}</p>
-                    </div>
-                    <div className="profilePicture">
-                        <img src={avatarImage} alt={user} className="avatarImg" />
+                <div className="messageContainer alignRight">
+                    <p className="sentText">{user}</p>
+                    <div className="messageContentWrapper">
+                        <div className="messageBox backgroundDark">
+                            <p className="messageText">{text}</p>
+                        </div>
+                        <div className="profilePicture">
+                            <img src={avatarImage} alt={user} className="avatarImg" />
+                        </div>
                     </div>
                 </div>
             )
             : (
-                <div className="messageContainer justifyStart">
-                    <div className="profilePicture">
-                        <img src={avatarImage} alt={user} className="avatarImg" />
+                <div className="messageContainer alignLeft">
+                    <p className="sentText">{user}</p>
+                    <div className="messageContentWrapper">
+                        <div className="profilePicture">
+                            <img src={avatarImage} alt={user} className="avatarImg" />
+                        </div>
+                        <div className="messageBox backgroundLight">
+                            <p className="messageText">{text}</p>
+                        </div>
                     </div>
-                    <div className="messageBox backgroundLight">
-                        <p className="messageText colorWhite">{text}</p>
-                    </div>
-                    <p className="sentText pl-10">{user}</p>
                 </div>
             )
     )

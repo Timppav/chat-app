@@ -29,7 +29,7 @@ const avatarMap = {
 
 const UsersList = ({ users }) => (
   <div className="usersContainer">
-    <h2>Active Users</h2>
+    <h3>Active Users</h3>
     <div className="usersList">
       {users.map((user, index) => (
         <div key={index} className="activeUser">

@@ -1,14 +1,8 @@
-.form {
-  display: flex;
-  border-top: 5px solid #f4511e;
-}
-
 .input {
   border: none;
   border-radius: 0;
-  padding: 5%;
   width: 80%;
-  font-size: 1.2em;
+  font-size: 0.8em;
 }
 
 .inputContainer {
