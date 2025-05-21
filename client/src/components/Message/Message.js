@@ -27,7 +27,7 @@ const avatars = {
   "system": systemAvatar
 };
 
-const Message = ({ message: { user, text, picture }, name }) => {
+const Message = ({ message: { user, text, picture, timestamp }, name }) => {
     let isSentByCurrentUser = false;
 
     if (user.trim().toLowerCase() === name.trim().toLowerCase()) {
@@ -36,12 +36,15 @@ const Message = ({ message: { user, text, picture }, name }) => {
 
     const avatarImage = avatars[picture] || avatars["avatar1"];
 
+    const formattedTime = timestamp ? new Date(timestamp).toLocaleDateString("en-GB", { hour: "2-digit", minute: "2-digit"}) : "";
+
     return (
         isSentByCurrentUser
             ? (
                 <div className="messageContainer alignRight">
                     <p className="sentText">{user}</p>
                     <div className="messageContentWrapper">
+                        {timestamp && <span className="timestamp">{formattedTime}</span>}
                         <div className="messageBox backgroundDark">
                             <p className="messageText">{text}</p>
                         </div>
@@ -61,6 +64,7 @@ const Message = ({ message: { user, text, picture }, name }) => {
                         <div className="messageBox backgroundLight">
                             <p className="messageText">{text}</p>
                         </div>
+                        {timestamp && <span className="timestamp">{formattedTime}</span>}
                     </div>
                 </div>
             )

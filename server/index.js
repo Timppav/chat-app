@@ -42,13 +42,15 @@ io.on("connect", (socket) => {
         socket.emit("message", {
             user: "System",
             text: `${user.displayName || user.name}, welcome to ${user.displayRoom || user.room}`,
-            picture: "system"
+            picture: "system",
+            timestamp: new Date().toISOString()
         });
 
         socket.broadcast.to(user.room).emit("message",{
             user: "System",
             text: `${user.displayName || user.name} has joined!`,
-            picture: "system"
+            picture: "system",
+            timestamp: new Date().toISOString()
         });
 
         callback();
@@ -62,7 +64,8 @@ io.on("connect", (socket) => {
         io.to(user.room).emit("message",{
             user: user.displayName || user.name,
             text: message,
-            picture: user.picture
+            picture: user.picture,
+            timestamp: new Date().toISOString()
         });
 
         const usersInRoom = getUsersInRoom(user.room);
@@ -82,7 +85,8 @@ io.on("connect", (socket) => {
             io.to(user.room).emit("message", {
                 user: "System",
                 text: `${user.displayName || user.name} has left.`,
-                picture: "system"
+                picture: "system",
+                timestamp: new Date().toISOString()
             });
 
             const usersInRoom = getUsersInRoom(user.room);

@@ -35,6 +35,14 @@
   overflow-wrap: break-word;
 }
 
+.timestamp {
+  font-size: 0.70em;
+  opacity: 0.6;
+  color: white;
+  align-self: center;
+  padding: 10px;
+}
+
 .profilePicture {
   width: 36px;
   height: 36px;
