@@ -20,7 +20,7 @@ const Chat = () => {
 
     const location = useLocation();
     const navigate = useNavigate();
-    const ENDPOINT = "localhost:5000";
+    const ENDPOINT = "https://chat-app-backend-java.onrender.com" || "localhost:5000";
 
     useEffect(() => {
         const { name, room, avatar: parsedAvatar } = queryString.parse(location.search);
