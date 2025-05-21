@@ -4,31 +4,25 @@
   align-items: center;
   height: 100vh;
   background-color: #1A1A1D;
+  padding: 10px;
 }
 
-.container {
+.chatContainer {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background: #393e46; 
   border-radius: 8px;
-  height: 90%;
-  width: 70%;
+  height: 100%;
+  width: 100%;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
   .outerContainer {
-    height: 100%;
+    display: block;
   }
 
-  .container {
-    width: 80%;
-    height: 90%;
-  }
-}
-
-@media (min-width: 480px) and (max-width: 1200px) {
-  .container {
-    width: 60%;
+  .chatContainer {
+    height: 70vh;
   }
 }

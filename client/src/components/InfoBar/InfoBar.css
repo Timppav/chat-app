@@ -5,7 +5,7 @@
   background-color: #f4511e;
   border-radius: 8px 8px 0 0;
   width: 100%;
-  height: 52px;
+  height: 50px;
 }
 
 .leftInnerContainer {
@@ -25,4 +25,10 @@
 
 .onlineIcon {
   margin-right: 5%;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .infoBar {
+    height: 35px;
+  }
 }
