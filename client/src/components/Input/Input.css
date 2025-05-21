@@ -1,8 +1,9 @@
 .input {
   border: none;
   border-radius: 0;
-  width: 80%;
+  width: 100%;
   font-size: 0.8em;
+  padding: 20px;
 }
 
 .inputContainer {
@@ -26,15 +27,18 @@ input:focus, textarea:focus, select:focus {
   text-transform: uppercase;
   text-decoration: none;
   background-color: #f4511e;
-  padding: 20px;
   display: inline-block;
   border: none;
-  width: 20%;
   cursor: pointer;
+  width: 60px;
 }
 
 .sendButton:hover {
   background-color: #6f240e;
+}
+
+.sendIcon {
+  width: 30px;
 }
 
 .emojiButton {
@@ -64,11 +68,4 @@ input:focus, textarea:focus, select:focus {
     z-index: 100;
     transform: scale(0.8);
     transform-origin: bottom left;
-}
-
-@media (max-width: 768px) {
-    .emojiPicker {
-        right: 0;
-        left: auto;
-    }
 }

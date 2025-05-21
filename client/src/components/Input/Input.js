@@ -3,6 +3,7 @@ import EmojiPicker from "emoji-picker-react";
 import { IoMdHappy } from "react-icons/io";
 
 import "./Input.css";
+import sendIcon from "../../icons/sendIcon.png";
 
 const Input = ({ message, setMessage, sendMessage }) => {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -36,7 +37,9 @@ const Input = ({ message, setMessage, sendMessage }) => {
                         onChange={(event) => setMessage(event.target.value)}
                         onKeyDown={event => event.key === "Enter" ? sendMessage(event) : null}
                     />
-                    <button className="sendButton" onClick={(event) => sendMessage(event)}>Send</button>
+                    <button className="sendButton" onClick={(event) => sendMessage(event)}>
+                        <img className="sendIcon" src={sendIcon} alt="send" />
+                    </button>
                 </div>
             </div>
         </form>
