@@ -23,10 +23,6 @@
   margin-right: 5%;
 }
 
-.onlineIcon {
-  margin-right: 5%;
-}
-
 @media (min-width: 320px) and (max-width: 480px) {
   .infoBar {
     height: 35px;

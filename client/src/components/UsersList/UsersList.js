@@ -12,6 +12,7 @@ import avatar10 from "../../avatars/avatar10.png";
 import systemAvatar from "../../avatars/system-avatar.png";
 
 import "./UsersList.css";
+import onlineIcon from "../../icons/onlineIcon.png";
 
 const avatarMap = {
   "avatar1": avatar1,
@@ -35,6 +36,7 @@ const UsersList = ({ users }) => (
     <div className="usersList">
       {users.map((user, index) => (
         <div key={index} className="activeUser">
+          <img src={onlineIcon} alt="online" />
           <div className="userAvatar">
             <img src={avatarMap[user.picture] || avatarMap["avatar1"]} alt={user.name} />
           </div>
