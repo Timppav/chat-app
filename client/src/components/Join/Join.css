@@ -67,21 +67,17 @@ html, body {
   border-radius: 15px;
 }
 
-.button:hover {background-color: #6f240e;}
+.button:enabled:hover {background-color: #6f240e;}
 
-.button:active {
+.button:enabled:active {
   background-color: #6f240e;
   transform: translateY(3px);
 }
 
-.button-disabled {
+.button:disabled {
   background-color: #888888;
   cursor: not-allowed;
   opacity: 0.6;
-}
-
-.button-disabled:hover {
-  background-color: #888888;
 }
 
 .characterCount {

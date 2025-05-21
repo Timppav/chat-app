@@ -72,7 +72,7 @@ const Join = () => {
                 />
             </div>
             <button
-                className={`button mt-20 ${(!name || !room) ? "button-disabled" : ""}`}
+                className="button mt-20"
                 type="button"
                 onClick={handleJoin}
                 disabled={!name || !room}
