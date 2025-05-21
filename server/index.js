@@ -65,8 +65,8 @@ io.on("connect", (socket) => {
             return callback("Invalid message format!");
         }
 
-        if (message.length > MAX_MESSAGE_LENGTH) {
-            return callback(`Message can't be longer than a maximum of ${MAX_MESSAGE_LENGTH} characters!`);
+        if (message.length > MAX_LENGTH) {
+            return callback(`Message can't be longer than a maximum of ${MAX_LENGTH} characters!`);
         }
 
         const trimmedMessage = message.trim();
