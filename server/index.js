@@ -6,12 +6,12 @@ const cors = require("cors");
 const { addUser, removeUser, getUser, getUsersInRoom } = require("./users");
 
 const PORT = process.env.PORT || 5000;
-
 const router = require("./router");
-
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
+
+const MAX_LENGTH = 500;
 
 app.use(cors());
 
@@ -60,6 +60,19 @@ io.on("connect", (socket) => {
         const user = getUser(socket.id);
 
         if (!user) return callback("User not found!");
+
+        if (!message || typeof message !== 'string') {
+            return callback("Invalid message format!");
+        }
+
+        if (message.length > MAX_MESSAGE_LENGTH) {
+            return callback(`Message can't be longer than a maximum of ${MAX_MESSAGE_LENGTH} characters!`);
+        }
+
+        const trimmedMessage = message.trim();
+        if (!trimmedMessage) {
+            return callback("Cannot send empty message!");
+        }
 
         io.to(user.room).emit("message",{
             user: user.displayName || user.name,

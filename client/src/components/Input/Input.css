@@ -3,7 +3,7 @@
   border-radius: 0;
   width: 100%;
   font-size: 0.8em;
-  padding: 20px;
+  padding: 20px 10px 20px 10px;
 }
 
 .inputContainer {
@@ -31,10 +31,24 @@ input:focus, textarea:focus, select:focus {
   border: none;
   cursor: pointer;
   width: 60px;
+  transition: all 0.1s;
 }
 
-.sendButton:hover {
+.sendButton:enabled:hover {
   background-color: #6f240e;
+}
+
+.sendButton:enabled:active {
+  transition: 0.01s;
+
+  .sendIcon {
+    padding-left: 3px;
+  }
+}
+
+.sendButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .sendIcon {
@@ -68,4 +82,28 @@ input:focus, textarea:focus, select:focus {
     z-index: 100;
     transform: scale(0.8);
     transform-origin: bottom left;
+}
+
+.chatCharacterCount {
+    font-size: 0.8rem;
+    color: #999;
+    background: white;
+    height: inherit;
+    margin: 0;
+    padding: 0 5px 0 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chatCharacterCount p {
+  margin: 0;
+}
+
+.chatCharacterCount.warning {
+    color: #f39c12;
+}
+
+.chatCharacterCount.limit {
+    color: #e74c3c;
 }
