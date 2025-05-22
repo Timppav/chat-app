@@ -1,3 +1,26 @@
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 15px;
+  background-color: #2c3139;
+  margin: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ae4220; 
+  border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6f240e 
+}
+
+.form {
+  border-radius: 10px;
+}
+
 .input {
   border: none;
   border-radius: 0;
@@ -30,8 +53,9 @@ input:focus, textarea:focus, select:focus {
   display: inline-block;
   border: none;
   cursor: pointer;
-  width: 60px;
+  width: 80px;
   transition: all 0.1s;
+  border-radius: 0 15px 15px 0;
 }
 
 .sendButton:enabled:hover {
@@ -64,6 +88,7 @@ input:focus, textarea:focus, select:focus {
     padding: 0 15px;
     cursor: pointer;
     color: #555;
+    border-radius: 15px 0 0 15px;
 }
 
 .emojiButton:hover {
