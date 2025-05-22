@@ -14,47 +14,63 @@ html, body {
 
 .joinOuterContainer {
   background-color: #1A1A1D;
+  padding: 10px;
+  overflow: auto;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
 }
 
 .joinInnerContainer {
-  width: 30%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  border-radius: 15px;
+  width: 100%;
 }
 
-.joinInput {
-  padding: 15px 20px;
+.headingContainer {
+  background-color: #f4511e;
+  border-radius: 15px 15px 0 0px;
   width: 100%;
+  flex-shrink: 0;
 }
 
 .heading {
   color: white;
-  font-size: 2.5em;
-  padding-bottom: 10px;
-  border-bottom: 2px solid white;
+  text-align: center;
 }
 
-.mt-20 {
-  margin-top: 20px;
+.joinInputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #393e46; 
+  width: 100%;
+  border-radius: 0 0 15px 15px;
+  padding: 15px;
+  flex: 1;
 }
 
-@media (min-width: 320px) and (max-width: 480px) {
-  .joinOuterContainer {
-    height: 100%;
-  }
-
-  .joinInnerContainer {
-    width: 90%;
-  }
-
+.joinInputWrapper {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
-.button {
-  display: inline-block;
+.joinLabel {
+  color: white;
+}
+
+.joinInput {
+  padding: 15px 20px;
+  border: none;
+  border-radius: 15px;
+  margin: 5px;
+}
+
+.joinButton {
   padding: 15px 25px;
   font-size: 1.0em;
   cursor: pointer;
@@ -65,26 +81,28 @@ html, body {
   background-color: #f4511e;
   border: none;
   border-radius: 15px;
+  margin-top: 15px;
+  width: 100px;
 }
 
-.button:enabled:hover {background-color: #6f240e;}
+.joinButton:enabled:hover {background-color: #6f240e;}
 
-.button:enabled:active {
+.joinButton:enabled:active {
   background-color: #6f240e;
   transform: translateY(3px);
 }
 
-.button:disabled {
+.joinButton:disabled {
   background-color: #888888;
   cursor: not-allowed;
   opacity: 0.6;
 }
 
 .characterCount {
-    text-align: right;
+    text-align: center;
     font-size: 0.8rem;
     color: #999;
-    margin-top: 4px;
+    letter-spacing: 1px;
 }
 
 .characterCount.warning {

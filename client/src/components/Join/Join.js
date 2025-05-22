@@ -39,44 +39,50 @@ const Join = () => {
     return (
         <div className="joinOuterContainer">
             <div className="joinInnerContainer">
-                <h1 className="heading">Join a chatroom</h1>
-                <div>
-                    <input
-                    placeholder="Name"
-                    className="joinInput"
-                    type="text"
-                    value={name}
-                    onChange={handleNameChange}
-                    maxLength={MAX_LENGTH}
-                    />
-                    <div className={`characterCount ${name.length >= MAX_LENGTH ? 'limit' : name.length >= MAX_LENGTH * 0.8 ? 'warning' : ''}`}>
-                        {name.length}/{MAX_LENGTH}
-                    </div>
+                <div className="headingContainer">
+                    <h1 className="heading">Timppa's Chatrooms</h1>
                 </div>
-                <div>
-                    <input
-                        placeholder="Room"
-                        className="joinInput mt-20"
+                <div className="joinInputContainer">
+                    <div className="joinInputWrapper">
+                        <label className="joinLabel">Enter your username:</label>
+                        <input
+                        placeholder="Name"
+                        className="joinInput"
                         type="text"
-                        value={room}
-                        onChange={handleRoomChange}
+                        value={name}
+                        onChange={handleNameChange}
                         maxLength={MAX_LENGTH}
-                    />
-                    <div className={`characterCount ${room.length >= MAX_LENGTH ? 'limit' : room.length >= MAX_LENGTH * 0.8 ? 'warning' : ''}`}>
-                        {room.length}/{MAX_LENGTH}
+                        />
+                        <div className={`characterCount ${name.length >= MAX_LENGTH ? 'limit' : name.length >= MAX_LENGTH * 0.8 ? 'warning' : ''}`}>
+                            {name.length}/{MAX_LENGTH}
+                        </div>
                     </div>
+                    <div className="joinInputWrapper">
+                        <label className="joinLabel">Enter room name:</label>
+                        <input
+                            placeholder="Room"
+                            className="joinInput"
+                            type="text"
+                            value={room}
+                            onChange={handleRoomChange}
+                            maxLength={MAX_LENGTH}
+                        />
+                        <div className={`characterCount ${room.length >= MAX_LENGTH ? 'limit' : room.length >= MAX_LENGTH * 0.8 ? 'warning' : ''}`}>
+                            {room.length}/{MAX_LENGTH}
+                        </div>
+                    </div>
+                    <ProfilePictureSelector 
+                        selectedPicture={profilePicture}
+                        onSelectPicture={handlePictureSelect}
+                    />
+                    <button
+                        className="joinButton"
+                        type="button"
+                        onClick={handleJoin}
+                        disabled={!name || !room}
+                    >Join</button>
                 </div>
-                <ProfilePictureSelector 
-                    selectedPicture={profilePicture}
-                    onSelectPicture={handlePictureSelect}
-                />
             </div>
-            <button
-                className="button mt-20"
-                type="button"
-                onClick={handleJoin}
-                disabled={!name || !room}
-            >Join</button>
         </div>
     )
 };
