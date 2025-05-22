@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import EmojiPicker from "emoji-picker-react";
 import { IoMdHappy } from "react-icons/io";
 
@@ -9,13 +9,10 @@ const MAX_LENGTH = 500;
 
 const Input = ({ message, setMessage, sendMessage }) => {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const textareaRef = useRef(null);
 
     const onEmojiClick = (emojiData) => {
         setMessage(prevMessage => prevMessage + emojiData.emoji);
-        // const newMessage = message + emojiData.emoji;
-        // if (newMessage.length <= MAX_LENGTH) {
-        //     setMessage(newMessage);
-        // }
     };
 
     const toggleEmojiPicker = (event) => {
@@ -26,9 +23,6 @@ const Input = ({ message, setMessage, sendMessage }) => {
     const handleInputChange = (event) => {
         const newValue = event.target.value;
         setMessage(newValue);
-        // if (newValue.length <= MAX_LENGTH) {
-        //     setMessage(newValue);
-        // } 
     }
 
     const handleSendMessage = (event) => {
@@ -39,10 +33,39 @@ const Input = ({ message, setMessage, sendMessage }) => {
     }
 
     const handleKeyDown = (event) => {
-        if (event.key === "Enter") {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
             handleSendMessage(event);
         }
     };
+
+    useEffect(() => {
+    const textarea = textareaRef.current;
+
+    if (textarea) {
+        const minHeight = parseFloat(getComputedStyle(textarea).minHeight);
+        const maxHeight = parseFloat(getComputedStyle(textarea).maxHeight);
+
+        textarea.style.padding = "5px";
+        textarea.style.height = minHeight + "px";
+
+        const scrollHeight = textarea.scrollHeight;
+
+        if (scrollHeight <= minHeight) {
+            textarea.style.height = minHeight + "px";
+            textarea.style.overflowY = "hidden";
+            textarea.style.padding = "19px 5px";
+        } else {
+            textarea.style.padding = "5px";
+            if (scrollHeight <= maxHeight) {
+                textarea.style.height = scrollHeight + "px";
+            } else {
+                textarea.style.overflowY = "scroll";
+                textarea.style.height = maxHeight + "px";
+            }
+        }
+    }
+}, [message]);
 
     const isOverLimit = message.length > MAX_LENGTH;
     const isNearLimit = message.length >= MAX_LENGTH * 0.8;
@@ -50,6 +73,9 @@ const Input = ({ message, setMessage, sendMessage }) => {
     return (
         <form className="form">
             <div className="inputContainer">
+                <div className={`chatCharacterCount ${isOverLimit ? 'limit' : isNearLimit ? 'warning' : ''}`}>
+                        <p>{message.length}/{MAX_LENGTH}</p>
+                </div>
                 <div className="emojiPickerContainer">
                     {showEmojiPicker && (
                         <div className="emojiPicker">
@@ -59,17 +85,15 @@ const Input = ({ message, setMessage, sendMessage }) => {
                 </div>
                 <div className="inputWrapper">
                     <button className="emojiButton" onClick={toggleEmojiPicker}><IoMdHappy size={20} /></button>
-                    <input 
+                    <textarea 
+                        ref={textareaRef}
                         className="input"
-                        type="text"
                         placeholder="Type a message..."
                         value={message}
                         onChange={handleInputChange}
                         onKeyDown={handleKeyDown}
+                        rows={1}
                     />
-                    <div className={`chatCharacterCount ${isOverLimit ? 'limit' : isNearLimit ? 'warning' : ''}`}>
-                        <p>{message.length}/{MAX_LENGTH}</p>
-                    </div>
                     <button
                         type="submit"
                         className="sendButton"
