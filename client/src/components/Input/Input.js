@@ -39,33 +39,44 @@ const Input = ({ message, setMessage, sendMessage }) => {
         }
     };
 
+    const handleFocus = () => {
+        setTimeout(() => {
+            if (textareaRef.current) {
+                textareaRef.current.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+            }
+        }, 200);
+    }
+
     useEffect(() => {
-    const textarea = textareaRef.current;
+        const textarea = textareaRef.current;
 
-    if (textarea) {
-        const minHeight = parseFloat(getComputedStyle(textarea).minHeight);
-        const maxHeight = parseFloat(getComputedStyle(textarea).maxHeight);
+        if (textarea) {
+            const minHeight = parseFloat(getComputedStyle(textarea).minHeight);
+            const maxHeight = parseFloat(getComputedStyle(textarea).maxHeight);
 
-        textarea.style.padding = "5px";
-        textarea.style.height = minHeight + "px";
-
-        const scrollHeight = textarea.scrollHeight;
-
-        if (scrollHeight <= minHeight) {
-            textarea.style.height = minHeight + "px";
-            textarea.style.overflowY = "hidden";
-            textarea.style.padding = "19px 5px";
-        } else {
             textarea.style.padding = "5px";
-            if (scrollHeight <= maxHeight) {
-                textarea.style.height = scrollHeight + "px";
+            textarea.style.height = minHeight + "px";
+
+            const scrollHeight = textarea.scrollHeight;
+
+            if (scrollHeight <= minHeight) {
+                textarea.style.height = minHeight + "px";
+                textarea.style.overflowY = "hidden";
+                textarea.style.padding = "19px 5px";
             } else {
-                textarea.style.overflowY = "scroll";
-                textarea.style.height = maxHeight + "px";
+                textarea.style.padding = "5px";
+                if (scrollHeight <= maxHeight) {
+                    textarea.style.height = scrollHeight + "px";
+                } else {
+                    textarea.style.overflowY = "scroll";
+                    textarea.style.height = maxHeight + "px";
+                }
             }
         }
-    }
-}, [message]);
+    }, [message]);
 
     const isOverLimit = message.length > MAX_LENGTH;
     const isNearLimit = message.length >= MAX_LENGTH * 0.8;
@@ -92,6 +103,7 @@ const Input = ({ message, setMessage, sendMessage }) => {
                         value={message}
                         onChange={handleInputChange}
                         onKeyDown={handleKeyDown}
+                        onFocus={handleFocus}
                         rows={1}
                     />
                     <button
