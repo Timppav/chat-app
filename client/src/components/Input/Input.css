@@ -146,3 +146,9 @@ input:focus, textarea:focus, select:focus {
 .chatCharacterCount.limit {
     color: #e74c3c;
 }
+
+@media (max-width: 650px) {
+  .emojiPicker {
+    transform: scale(0.6);
+  }
+}

@@ -9,6 +9,8 @@ const MAX_LENGTH = 500;
 
 const Input = ({ message, setMessage, sendMessage }) => {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const emojiPickerRef = useRef(null);
+    const emojiButtonRef = useRef(null);
     const textareaRef = useRef(null);
 
     const onEmojiClick = (emojiData) => {
@@ -18,6 +20,16 @@ const Input = ({ message, setMessage, sendMessage }) => {
     const toggleEmojiPicker = (event) => {
         event.preventDefault();
         setShowEmojiPicker(prevState => !prevState);
+        
+        setTimeout(() => {
+            if (emojiPickerRef.current) {
+                textareaRef.current.focus();
+                textareaRef.current.scrollIntoView({
+                    behavior: "auto",
+                    block: "center"
+                });
+            }
+        }, 200);
     }
 
     const handleInputChange = (event) => {
@@ -43,7 +55,7 @@ const Input = ({ message, setMessage, sendMessage }) => {
         setTimeout(() => {
             if (textareaRef.current) {
                 textareaRef.current.scrollIntoView({
-                    behavior: "smooth",
+                    behavior: "auto",
                     block: "center"
                 });
             }
@@ -78,6 +90,25 @@ const Input = ({ message, setMessage, sendMessage }) => {
         }
     }, [message]);
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (emojiPickerRef.current && 
+                !emojiPickerRef.current.contains(event.target) &&
+                emojiButtonRef.current && 
+                !emojiButtonRef.current.contains(event.target)) {
+                setShowEmojiPicker(false);
+            }
+        };
+
+        if (showEmojiPicker) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [showEmojiPicker]);
+
     const isOverLimit = message.length > MAX_LENGTH;
     const isNearLimit = message.length >= MAX_LENGTH * 0.8;
 
@@ -89,13 +120,15 @@ const Input = ({ message, setMessage, sendMessage }) => {
                 </div>
                 <div className="emojiPickerContainer">
                     {showEmojiPicker && (
-                        <div className="emojiPicker">
+                        <div className="emojiPicker" ref={emojiPickerRef}>
                             <EmojiPicker onEmojiClick={onEmojiClick} />
                         </div>
                     )}
                 </div>
                 <div className="inputWrapper">
-                    <button className="emojiButton" onClick={toggleEmojiPicker}><IoMdHappy size={20} /></button>
+                    <button className="emojiButton" ref={emojiButtonRef} onClick={toggleEmojiPicker}>
+                        <IoMdHappy size={20} />
+                    </button>
                     <textarea 
                         ref={textareaRef}
                         className="input"
