@@ -110,12 +110,13 @@ const Input = ({ message, setMessage, sendMessage }) => {
     }, [showEmojiPicker]);
 
     const isOverLimit = message.length > MAX_LENGTH;
+    const isAtLimit = message.length == MAX_LENGTH;
     const isNearLimit = message.length >= MAX_LENGTH * 0.8;
 
     return (
         <form className="form">
             <div className="inputContainer">
-                <div className={`chatCharacterCount ${isOverLimit ? 'limit' : isNearLimit ? 'warning' : ''}`}>
+                <div className={`chatCharacterCount ${isOverLimit || isAtLimit ? 'limit' : isNearLimit ? 'warning' : ''}`}>
                         <p>{message.length}/{MAX_LENGTH}</p>
                 </div>
                 <div className="emojiPickerContainer">
@@ -137,6 +138,7 @@ const Input = ({ message, setMessage, sendMessage }) => {
                         onChange={handleInputChange}
                         onKeyDown={handleKeyDown}
                         onFocus={handleFocus}
+                        maxLength={MAX_LENGTH}
                         rows={1}
                     />
                     <button

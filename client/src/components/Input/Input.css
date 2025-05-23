@@ -35,16 +35,16 @@ input:focus, textarea:focus, select:focus {
 }
 
 .input::-webkit-scrollbar-track {
-  margin: 0;
+  margin: 5px;
 }
 
 .input::-webkit-scrollbar-thumb {
-  background: #ae4220; 
+  background: linear-gradient(0deg,rgba(112, 0, 149) 0%, rgba(57, 0, 75) 100%);
   border-radius: 15px;
 }
 
 .input::-webkit-scrollbar-thumb:hover {
-  background: #6f240e 
+  background: rgb(57, 0, 75);
 }
 
 .sendButton {
