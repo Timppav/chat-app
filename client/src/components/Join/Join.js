@@ -40,19 +40,19 @@ const Join = () => {
         <div className="joinOuterContainer">
             <div className="joinInnerContainer">
                 <div className="headingContainer">
-                    <h1 className="heading">Timppa's Chatrooms</h1>
+                    <h1 className="heading">Chatrooms App</h1>
                 </div>
                 <div className="joinContainer">
                     <div className="joinInputContainer">
                         <div className="joinInputWrapper">
                             <label className="joinLabel">Enter your username:</label>
                             <input
-                            placeholder="Name"
-                            className="joinInput"
-                            type="text"
-                            value={name}
-                            onChange={handleNameChange}
-                            maxLength={MAX_LENGTH}
+                                placeholder="Name"
+                                className="joinInput"
+                                type="text"
+                                value={name}
+                                onChange={handleNameChange}
+                                maxLength={MAX_LENGTH}
                             />
                             <div className={`characterCount ${name.length >= MAX_LENGTH ? 'limit' : name.length >= MAX_LENGTH * 0.8 ? 'warning' : ''}`}>
                                 {name.length}/{MAX_LENGTH}
