@@ -36,6 +36,13 @@ const Join = () => {
         }
     };
 
+    const handleKeyDown = (event) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            handleJoin();
+        }
+    };
+
     return (
         <div className="joinOuterContainer">
             <div className="joinInnerContainer">
@@ -52,6 +59,7 @@ const Join = () => {
                                 type="text"
                                 value={name}
                                 onChange={handleNameChange}
+                                onKeyDown={handleKeyDown}
                                 maxLength={MAX_LENGTH}
                             />
                             <div className={`characterCount ${name.length >= MAX_LENGTH ? 'limit' : name.length >= MAX_LENGTH * 0.8 ? 'warning' : ''}`}>
@@ -66,6 +74,7 @@ const Join = () => {
                                 type="text"
                                 value={room}
                                 onChange={handleRoomChange}
+                                onKeyDown={handleKeyDown}
                                 maxLength={MAX_LENGTH}
                             />
                             <div className={`characterCount ${room.length >= MAX_LENGTH ? 'limit' : room.length >= MAX_LENGTH * 0.8 ? 'warning' : ''}`}>
