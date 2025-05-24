@@ -31,7 +31,7 @@ const avatarMap = {
 const UsersList = ({ users }) => (
   <div className="usersContainer">
     <div className="topBar">
-      <h3>Active Users</h3>
+      <h3>Active Users {users.length}/15</h3>
     </div>
     <div className="usersList">
       {users.map((user, index) => (

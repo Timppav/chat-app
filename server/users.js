@@ -1,4 +1,5 @@
 const users = [];
+const MAX_USERS = 15;
 const MAX_LENGTH = 20;
 
 const colors = [
@@ -36,6 +37,10 @@ const getRandomColor = () => {
 const addUser = ({ id, name, room, picture }) => {
     const originalName = name;
     const originalRoom = room;
+
+    if ((users.length + 1) > MAX_USERS) {
+        return { error: `Room is full! ${users.length}/${MAX_USERS}` };
+    }
 
     if (originalName.length > MAX_LENGTH) {
         return { error: `Username cannot be longer than ${MAX_LENGTH} characters!` };
