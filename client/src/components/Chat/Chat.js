@@ -1,6 +1,5 @@
 import React, {useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import queryString from "query-string";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import io from "socket.io-client";
 
 import "./Chat.css";
@@ -20,22 +19,27 @@ const Chat = () => {
 
     const location = useLocation();
     const navigate = useNavigate();
+    const { roomName } = useParams();
     const ENDPOINT = process.env.REACT_APP_CHAT_APP_URL || "localhost:5000";
 
-    useEffect(() => {
-        const { name, room, avatar: parsedAvatar } = queryString.parse(location.search);
-        const avatar = parsedAvatar || "avatar1";
+    console.log(users);
 
-        if (!name || !room) {
+    useEffect(() => {
+        const userData = location.state;
+
+        if (!userData || !userData.name || !roomName) {
             navigate("/");
+            return;
         }
+
+        const { name: userName, avatar } = userData;
 
         socket = io(ENDPOINT,{transports:['websocket','polling','flashsocket']});
 
-        setName(name);
-        setRoom(room);
+        setName(userName);
+        setRoom(roomName);
 
-        socket.emit("join", { name, room, picture: avatar || "avatar1" }, (error) => {
+        socket.emit("join", { name: userName, room: roomName, picture: avatar || "avatar1" }, (error) => {
             if (error) {
                 alert(error);
                 navigate("/");
@@ -46,7 +50,7 @@ const Chat = () => {
             socket.disconnect();
             socket.off();
         }
-    }, [ENDPOINT, location.search, navigate]);
+    }, [ENDPOINT, location.state, roomName, navigate]);
 
     useEffect(() => {
         socket.on("message", (message) => {

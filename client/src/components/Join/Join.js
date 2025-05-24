@@ -32,7 +32,12 @@ const Join = () => {
 
     const handleJoin = () => {
         if (name && room) {
-            navigate(`/chat?name=${name}&room=${room}&avatar=${profilePicture}`);
+            navigate(`/chat/${room}`, {
+                state: {
+                    name: name,
+                    avatar: profilePicture
+                }
+            });
         }
     };
 
