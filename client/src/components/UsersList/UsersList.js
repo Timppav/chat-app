@@ -35,7 +35,7 @@ const UsersList = ({ users }) => (
     </div>
     <div className="usersList">
       {users.map((user, index) => (
-        <div key={index} className="activeUser">
+        <div key={index} className={`activeUser ${user.color}`}>
           <img src={onlineIcon} alt="online" />
           <div className="userAvatar">
             <img src={avatarMap[user.picture] || avatarMap["avatar1"]} alt={user.name} />

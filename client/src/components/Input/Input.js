@@ -110,7 +110,7 @@ const Input = ({ message, setMessage, sendMessage }) => {
     }, [showEmojiPicker]);
 
     const isOverLimit = message.length > MAX_LENGTH;
-    const isAtLimit = message.length == MAX_LENGTH;
+    const isAtLimit = message.length === MAX_LENGTH;
     const isNearLimit = message.length >= MAX_LENGTH * 0.8;
 
     return (

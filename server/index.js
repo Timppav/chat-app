@@ -3,7 +3,7 @@ const socketio = require("socket.io");
 const http = require("http");
 const cors = require("cors");
 
-const { addUser, removeUser, getUser, getUsersInRoom } = require("./users");
+const { addUser, removeUser, getUser, getUsersInRoom } = require("./users").default;
 
 const PORT = process.env.PORT || 5000;
 const router = require("./router");
@@ -20,13 +20,14 @@ const formatUsers = (users) => {
     return users.map(u => ({
         id: u.id,
         name: u.displayName || u.name,
-        picture: u.picture
+        picture: u.picture,
+        color: u.color
     }));
 };
 
 io.on("connect", (socket) => {
-    socket.on("join", ({ name, room, picture }, callback) => {
-        const { error, user } = addUser({ id: socket.id, name, room, picture });
+    socket.on("join", ({ name, room, picture, color }, callback) => {
+        const { error, user } = addUser({ id: socket.id, name, room, picture, color });
 
         if (error) return callback(error);
 
@@ -43,14 +44,16 @@ io.on("connect", (socket) => {
             user: "System",
             text: `${user.displayName || user.name}, welcome to ${user.displayRoom || user.room}`,
             picture: "system",
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            color: "systemColor"
         });
 
         socket.broadcast.to(user.room).emit("message",{
             user: "System",
             text: `${user.displayName || user.name} has joined!`,
             picture: "system",
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            color: "systemColor"
         });
 
         callback();
@@ -78,7 +81,8 @@ io.on("connect", (socket) => {
             user: user.displayName || user.name,
             text: message,
             picture: user.picture,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            color: user.color
         });
 
         const usersInRoom = getUsersInRoom(user.room);

@@ -27,7 +27,7 @@ const avatars = {
   "system": systemAvatar
 };
 
-const Message = ({ message: { user, text, picture, timestamp }, name }) => {
+const Message = ({ message: { user, text, picture, timestamp, color }, name }) => {
     let isSentByCurrentUser = false;
 
     if (user.trim().toLowerCase() === name.trim().toLowerCase()) {
@@ -45,7 +45,7 @@ const Message = ({ message: { user, text, picture, timestamp }, name }) => {
                     <p className="sentText">{user}</p>
                     <div className="messageContentWrapper">
                         {timestamp && <span className="timestamp">{formattedTime}</span>}
-                        <div className="messageBox backgroundDark">
+                        <div className={`messageBox ${color}`}>
                             <p className="messageText">{text}</p>
                         </div>
                         <div className="profilePicture">
@@ -61,7 +61,7 @@ const Message = ({ message: { user, text, picture, timestamp }, name }) => {
                         <div className="profilePicture">
                             <img src={avatarImage} alt={user} className="avatarImg" />
                         </div>
-                        <div className="messageBox backgroundLight">
+                        <div className={`messageBox ${color}`}>
                             <p className="messageText">{text}</p>
                         </div>
                         {timestamp && <span className="timestamp">{formattedTime}</span>}

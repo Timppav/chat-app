@@ -22,8 +22,6 @@ const Chat = () => {
     const { roomName } = useParams();
     const ENDPOINT = process.env.REACT_APP_CHAT_APP_URL || "localhost:5000";
 
-    console.log(users);
-
     useEffect(() => {
         const userData = location.state;
 
@@ -32,14 +30,14 @@ const Chat = () => {
             return;
         }
 
-        const { name: userName, avatar } = userData;
+        const { name: userName, avatar, color } = userData;
 
         socket = io(ENDPOINT,{transports:['websocket','polling','flashsocket']});
 
         setName(userName);
         setRoom(roomName);
 
-        socket.emit("join", { name: userName, room: roomName, picture: avatar || "avatar1" }, (error) => {
+        socket.emit("join", { name: userName, room: roomName, picture: avatar || "avatar1", color: color }, (error) => {
             if (error) {
                 alert(error);
                 navigate("/");
