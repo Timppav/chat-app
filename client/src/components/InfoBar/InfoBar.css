@@ -20,11 +20,35 @@
   display: flex;
   flex: 0.5;
   justify-content: flex-end;
-  margin-right: 5%;
+}
+
+.closeButton {
+  padding: 0 25px;
+  height: 50px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background: none;
+}
+
+.closeButton:hover {
+  background: linear-gradient(180deg,rgba(74, 0, 89, 1) 0%, rgba(30, 0, 47) 100%);
+}
+
+.closeButton:active {
+  background: rgb(30, 0, 47);
+}
+
+.closeIcon {
+  background: none;
 }
 
 @media (max-width: 650px) {
   .infoBar {
+    height: 35px;
+  }
+
+  .closeButton {
     height: 35px;
   }
 }
