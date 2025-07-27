@@ -16,6 +16,8 @@ const Chat = () => {
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [connectionError, setConnectionError] = useState("");
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -32,12 +34,33 @@ const Chat = () => {
 
         const { name: userName, avatar, color } = userData;
 
-        socket = io(ENDPOINT,{transports:['websocket','polling','flashsocket']});
+        socket = io(ENDPOINT,{
+            transports:['websocket','polling','flashsocket'],
+            timeout: 20000
+        });
 
         setName(userName);
         setRoom(roomName);
 
+        socket.on("connect", () => {
+            console.log("Connected to server");
+            setConnectionError("");
+        });
+
+        socket.on("connect_error", (error) => {
+            console.error("Connection error:", error);
+            setConnectionError("Failed to connect to server. Retrying...");
+        });
+
+        socket.on("disconnect", (reason) => {
+            console.log("Disconnected:", reason);
+            if (reason === "io server disconnect") {
+                socket.connect();
+            }
+        });
+
         socket.emit("join", { name: userName, room: roomName, picture: avatar || "avatar1", color: color }, (error) => {
+            setIsLoading(false);
             if (error) {
                 alert(error);
                 navigate("/");
@@ -75,6 +98,27 @@ const Chat = () => {
 
     if (!name || !room) {
         return null;
+    }
+
+    if (isLoading) {
+        return (
+            <div className="outerContainer">
+                <div className="innerContainer">
+                    <UsersList users={users} />
+                    <div className="chatContainer">
+                        <InfoBar room={room} />
+                        <div className="loadingContainer">
+                            <div className="loadingSpinner"></div>
+                            <h2>Connecting to chat...</h2>
+                            {connectionError && (
+                                <p className="connectionError">{connectionError}</p>
+                            )}
+                        </div>
+                        <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     return (
